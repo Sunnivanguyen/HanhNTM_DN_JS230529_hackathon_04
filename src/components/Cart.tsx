@@ -1,5 +1,5 @@
 import React from "react";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineMinus, AiFillDelete } from "react-icons/ai";
 
 type DishType = {
   id: string;
@@ -15,9 +15,10 @@ const Cart: React.FC<{
   onOpenCart: () => void;
   handleIncrease: (id: string) => void;
   handleDecrease: (id: string) => void;
-}> = ({ carts, onOpenCart, handleIncrease, handleDecrease }) => {
+  handleDelete: (id: string) => void;
+}> = ({ carts, onOpenCart, handleIncrease, handleDecrease, handleDelete }) => {
   const totalPrice = carts.reduce(
-    (accumulator, item) => accumulator + item.price,
+    (accumulator, item) => accumulator + item.price * item.quantity,
     0
   );
 
@@ -34,6 +35,7 @@ const Cart: React.FC<{
               <em>{item.quantity}</em>
               <AiOutlineMinus onClick={() => handleDecrease(item.id)} />
             </div>
+            <AiFillDelete onClick={() => handleDelete(item.id)} />
           </div>
         ))}
       </div>

@@ -15,15 +15,11 @@ function App() {
   };
 
   const [carts, setCarts] = useState<DishType[] | []>([]);
-  const [selecteCart, setSelectedCart] = useState<DishType | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleAddToCart = (cardId: string) => {
     const selectedItem = dishes.find((item: DishType) => item.id === cardId);
     const isInCart = carts.find((item: DishType) => item.id === cardId);
-
-    if (selectedItem) setSelectedCart(selectedItem);
-    let quan = selecteCart?.quantity;
 
     if (selectedItem) {
       if (!isInCart)
@@ -31,11 +27,14 @@ function App() {
           ...prevCarts,
           { ...selectedItem, quantity: 1 },
         ]);
-      else if (isInCart && quan) {
-        setCarts((prevCarts) => []);
+      else {
+        setCarts((prevCarts) =>
+          prevCarts.map((item: DishType) =>
+            item.id === cardId ? { ...item, quantity: item.quantity++ } : item
+          )
+        );
       }
     }
-    console.log(carts);
   };
 
   const handleOpenCart = () => {
@@ -43,34 +42,40 @@ function App() {
   };
 
   const handleIncrease = (id: string) => {
-    const selectedItem = carts.find((item: DishType) => item.id === id);
-    const index = carts.findIndex((item: DishType) => item.id === id);
-    if (selectedItem)
-      setCarts((prevCarts) => prevCarts.splice(index, 1, selectedItem));
+    setCarts((prevCarts) =>
+      prevCarts.map((item: DishType) =>
+        item.id === id ? { ...item, quantity: item.quantity++ } : item
+      )
+    );
   };
 
   const handleDecrease = (id: string) => {
-    const selectedItem = carts.find((item: DishType) => item.id === id);
-    const index = carts.findIndex((item: DishType) => item.id === id);
-    if (selectedItem)
-      setCarts((prevCarts) =>
-        prevCarts.splice(index, 1, {
-          ...selectedItem,
-          quantity: selectedItem.quantity--,
-        })
-      );
+    setCarts((prevCarts) =>
+      prevCarts.map((item: DishType) =>
+        item.id === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity-- }
+          : item
+      )
+    );
+  };
+
+  const handleDelete = (id: string) => {
+    setCarts((prevCarts) =>
+      prevCarts.filter((item: DishType) => item.id !== id)
+    );
   };
 
   return (
     <div className="app-container">
       <Header carts={carts} onOpenCart={handleOpenCart} />
-      <Menu onAddToCart={handleAddToCart} />
+      <Menu onAddToCart={handleAddToCart} isOpen={isOpen} />
       {isOpen ? (
         <Cart
           carts={carts}
           onOpenCart={handleOpenCart}
           handleIncrease={handleIncrease}
           handleDecrease={handleDecrease}
+          handleDelete={handleDelete}
         />
       ) : null}
     </div>

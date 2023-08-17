@@ -3,13 +3,8 @@
   margin: 0;
   padding: 0;
 }
-
-.app-container {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+body {
+  overflow-y: hidden;
 }
 
 header {
@@ -48,13 +43,35 @@ header {
   justify-content: center;
 }
 
+.app-container {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 main {
-  margin-top: 100px;
-  padding: 10px auto;
+  top: 100px;
+  width: 100%;
+  padding-top: 100px;
+  padding-bottom: 200px;
   display: grid;
-  grid-template-columns: repeat(3, 400px);
-  gap: 30px;
-  z-index: 0;
+  grid-template-columns: repeat(3, 300px);
+  gap: 100px;
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  overflow-y: scroll;
+}
+
+.narrow {
+  gap: 50px;
+  right: 300px;
+  grid-template-columns: repeat(2, 300px);
 }
 .item-container {
   height: 400px;
@@ -67,8 +84,9 @@ main {
   align-items: center;
   color: white;
   gap: 10px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   z-index: 1000;
 }
 .item-container img {
@@ -114,9 +132,10 @@ main {
 }
 .cart-item img {
   height: 80px;
-  width: 80px;
+  width: 90px;
   background-position: center;
   object-fit: contain;
+  background-color: rgb(67, 66, 66);
 }
 .cart {
   width: 100%;
