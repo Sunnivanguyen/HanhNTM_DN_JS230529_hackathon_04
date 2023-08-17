@@ -1,24 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Header from "./components/Header";
+import Todos from "./components/Todos";
+import Form from "./components/Form";
+import Todo from "./models/data";
+import { useState } from "react";
 
 function App() {
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const handleAddTodo = (todoText: string): void => {
+    const newTodo = new Todo(todoText);
+    setTodos((prevTodos) => prevTodos.concat(newTodo));
+  };
+
+  const handleRemoveTodo = (todoId: string): void => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== todoId));
+  };
+
+  const handleCheckTodo = (todoId: string): void => {
+    setTodos((prevTodos) => {
+      const todo = prevTodos.find((item) => item.id === todoId);
+      console.log(todo);
+      // const updatedTodo: Todo = {
+      //   ...todo,
+      //   isDone: !todo?.isDone,
+      // };
+      // return [...prevTodos, updatedTodo];
+      return prevTodos;
+    });
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Header />
+      <Todos
+        onRemoveTodo={handleRemoveTodo}
+        todos={todos}
+        onCheckTodo={handleCheckTodo}
+      />
+      <Form onAddTodo={handleAddTodo} />
     </div>
   );
 }

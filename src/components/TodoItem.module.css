@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  align-self: center;
+  width: 100%;
+  gap: 10px;
+}
+.control_container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  width: 50px;
+}
+.input {
+  font-size: 30px;
+}

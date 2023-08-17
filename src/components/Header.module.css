@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 30px 50px;
+  align-self: center;
+  width: 500px;
+  gap: 10px;
+}
+hr {
+  width: 100%;
+  background-color: white;
+  height: 1px;
+}
